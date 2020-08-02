@@ -7,7 +7,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-export const viewNotes = (notes) => {
+
+export const ViewNotes = (props) => {
+    useEffect(() => { 
+        console.log("notes are ", typeof notes); 
+        console.log("props ", props); 
+        // console.log("notes are ", Object.keys(notes).length); 
+    });
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
@@ -18,12 +24,16 @@ export const viewNotes = (notes) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {notes.map((note) => (
-                        <TableRow key={note.title}>
-                            <TableCell>{note.title}</TableCell>
-                            <TableCell>{note.body}</TableCell>
-                        </TableRow>
-                    ))}
+                    {props.notes.length ?
+                        props.notes.map((note) => (
+                            <TableRow key={note.title}>
+                                <TableCell>{note.title}</TableCell>
+                                <TableCell>{note.body}</TableCell>
+                            </TableRow>
+                        ))
+                        : <TableRow>
+                            <TableCell>No Notes to show</TableCell>
+                        </TableRow>}
                 </TableBody>
             </Table>
         </TableContainer>

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { viewNotes } from './viewNotes'
+import { ViewNotes } from './ViewNotes'
 
 import { createDB, addNotes } from './processSave.js';
 
@@ -22,11 +22,12 @@ function App() {
 
   const addNote = (e) => {
     e.preventDefault()
+    console.log("add note called");
     setNotes([
       ...notes,
       { title, body }
-    ])
-    console.log(notes);
+    ]);
+
     setTitle('')
     setBody('')
   }
@@ -45,7 +46,7 @@ function App() {
         <h1>Notes</h1>
 
         <p>Add note</p>
-        <form onSubmit={addNote}>
+        <form>
           <TextField
             id="standard-full-width"
             label="Add Title"
@@ -68,13 +69,25 @@ function App() {
             value={body}
             onChange={(e) => setBody(e.target.value)}
           />
+
           <br />
-          <Button variant="contained" color="primary">Add note</Button>
+
+          <Button variant="contained" color="primary" onClick={addNote}>Add note</Button>
         </form>
-        <button onClick={(e) => { e.preventDefault(); addNotes(notes) }}>Save Note</button>
+
+        <br />
+
+        <Button variant="contained" color="primary"
+          onClick={(e) => {
+            e.preventDefault();
+            addNotes(notes)
+          }}>
+          Save Note
+        </Button>
+
       </div>
 
-      <viewNotes notes={notes} />
+      <ViewNotes notes={notes} />
     </div>
   );
 }
