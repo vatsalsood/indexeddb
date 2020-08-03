@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { addNotes, deleteEntry } from './processSave.js';
 import Table from '@material-ui/core/Table';
 
 import TableBody from '@material-ui/core/TableBody';
@@ -16,6 +17,10 @@ export const ViewNotes = (props) => {
     useEffect(() => {
         setNotes(props.notes);
     }, []);
+
+    useEffect(() => {
+        addNotes(notes);
+    }, [notes]);
 
     const removeNote = (title) => {
         setNotes(notes.filter((note) => note.title !== title))
@@ -37,7 +42,7 @@ export const ViewNotes = (props) => {
                                 <TableCell>{note.title}</TableCell>
                                 <TableCell>{note.body}</TableCell>
                                 <TableCell>
-                                    <IconButton size="small" aria-label="close" color="inherit" onClick={() => removeNote(note.title)}>
+                                    <IconButton size="small" aria-label="close" color="inherit" onClick={() => { deleteEntry(note.title); removeNote(note.title) }}>
                                         <CloseIcon fontSize="small" />
                                     </IconButton>
                                 </TableCell>
@@ -48,7 +53,7 @@ export const ViewNotes = (props) => {
                         </TableRow>}
                 </TableBody>
             </Table>
-        </TableContainer>
+        </TableContainer >
     )
 
 }; 

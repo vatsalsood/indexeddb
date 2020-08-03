@@ -19,6 +19,21 @@ export function createDB(dbName) {
     }
 }
 
+export function deleteEntry(key) {
+    const request = indexedDB.open('test');
+
+    request.onsuccess = e => {
+        let db = e.target.result;
+
+        const tx = db.transaction("personal_notes", "readwrite");
+        var objectStore = tx.objectStore("personal_notes");
+        var objectStoreRequest = objectStore.delete(key);
+        objectStoreRequest.onsuccess = function (event) {
+            console.log("successfully deleted")
+        };
+    }
+}
+
 export function createTable(tableName, version) {
     const request = indexedDB.open('test' + Math.random(4, 5));
 
