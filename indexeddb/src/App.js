@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { makeStyles } from '@material-ui/core/styles';
-
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { ViewNotes } from './ViewNotes'
@@ -9,7 +7,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { createDB, addNotes, createTable } from './processSave.js';
+import { createDB, addNotes } from './processSave.js';
 
 function App() {
 
@@ -17,8 +15,6 @@ function App() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [mode, setMode] = useState('default');
-  const [tableName, setTableName] = useState('');
-  const [dbVersion, setdbVersion] = useState(2);
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -46,7 +42,7 @@ function App() {
   }
 
   const renderComponent = () => {
-    if (mode === 'update') {
+    if (mode === 'add') {
       return (
         <div>
           <p>Add note</p>
@@ -86,7 +82,7 @@ function App() {
               e.preventDefault();
               addNotes(notes)
             }}>
-            Save Note
+            Save Notes
           </Button>
         </div>
       )
@@ -94,16 +90,6 @@ function App() {
     else if (mode === 'view') {
       return (<ViewNotes notes={notes} />)
     }
-  }
-
-  const removeNote = (title) => {
-    setNotes(notes.filter((note) => note.title !== title))
-  }
-
-  const addTable = () => {
-    createTable(tableName, dbVersion);
-    // const version = dbVersion + 1;
-    // setdbVersion(version);
   }
 
   /**
@@ -137,11 +123,11 @@ function App() {
       />
 
       <Button variant="contained" color="primary" style={{ margin: 8 }}
-        onClick={() => { setMode('view'); }}>View notes</Button>
+        onClick={() => { setMode('view'); }}>View/remove notes</Button>
       <br />
 
       <Button variant="contained" color="primary" style={{ margin: 8 }}
-        onClick={() => { setMode('update'); }}>Update notes</Button>
+        onClick={() => { setMode('add'); }}>Add notes</Button>
 
       {renderComponent()}
     </div>

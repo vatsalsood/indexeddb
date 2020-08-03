@@ -7,8 +7,20 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 export const ViewNotes = (props) => {
+    const [notes, setNotes] = useState([]);
+
+    useEffect(() => {
+        setNotes(props.notes);
+    }, []);
+
+    const removeNote = (title) => {
+        setNotes(notes.filter((note) => note.title !== title))
+    };
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
@@ -19,11 +31,16 @@ export const ViewNotes = (props) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.notes.length ?
-                        props.notes.map((note) => (
+                    {notes.length ?
+                        notes.map((note) => (
                             <TableRow key={note.title}>
                                 <TableCell>{note.title}</TableCell>
                                 <TableCell>{note.body}</TableCell>
+                                <TableCell>
+                                    <IconButton size="small" aria-label="close" color="inherit" onClick={() => removeNote(note.title)}>
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                </TableCell>
                             </TableRow>
                         ))
                         : <TableRow>

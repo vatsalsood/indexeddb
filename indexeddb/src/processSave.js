@@ -4,8 +4,8 @@ export function createDB(dbName) {
     const request = indexedDB.open(dbName);
     request.onupgradeneeded = e => {
         let db = e.target.result;
-        let pNotes = db.createObjectStore('personal_notes', { keyPath: "title" });
-        let toddNotes = db.createObjectStore('todo_notes', { keyPath: "title" });
+        db.createObjectStore('personal_notes', { keyPath: "title" });
+        db.createObjectStore('todo_notes', { keyPath: "title" });
         console.log("upgrade called", db);
     }
 
@@ -21,14 +21,12 @@ export function createDB(dbName) {
 
 export function createTable(tableName, version) {
     const request = indexedDB.open('test' + Math.random(4, 5));
-    console.log("request", request);
-    console.log("tablename", tableName);
-    console.log("version", version)
+
     request.onupgradeneeded = e => {
         console.log("onupgradeneeded");
 
         let db = e.target.result;
-        let pNotes = db.createObjectStore(tableName, { keyPath: "title" });
+        db.createObjectStore(tableName, { keyPath: "title" });
     }
     request.onsuccess = e => {
         console.log("success called");
