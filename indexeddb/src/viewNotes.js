@@ -9,11 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 export const ViewNotes = (props) => {
-    useEffect(() => { 
-        console.log("notes are ", typeof notes); 
-        console.log("props ", props); 
-        // console.log("notes are ", Object.keys(notes).length); 
-    });
     return (
         <TableContainer component={Paper}>
             <Table aria-label="simple table">
